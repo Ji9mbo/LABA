@@ -1,0 +1,109 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="AtmosphereCalc.Views.MainWindow"
+        Title="Атмосфера ISA"
+        Width="880" Height="520"
+        MinWidth="750" MinHeight="480"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+            <GradientStop Offset="0" Color="#FDFDFE"/>
+            <GradientStop Offset="1" Color="#F0F4F8"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid ColumnDefinitions="340, *" Margin="30">
+        
+        <StackPanel Grid.Column="0" Spacing="16" Margin="0,0,30,0">
+            <TextBlock Text="Параметры среды" FontSize="26" FontWeight="Light" Foreground="#1E293B" LetterSpacing="0.5"/>
+  
+            <Border Background="White" CornerRadius="16" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="ВЫСОТА (МЕТРЫ)" FontSize="12" Foreground="#94A3B8" FontWeight="SemiBold" LetterSpacing="1"/>
+                    <TextBox Name="AltitudeInput" Text="0" FontSize="20" FontWeight="Medium" 
+                             BorderThickness="0,0,0,1" BorderBrush="#E2E8F0" Background="Transparent"/>
+                    
+                    <TextBlock Name="ErrorMessage" Foreground="#EF4444" FontSize="12" IsVisible="False"/>
+                    
+                    <Slider Name="AltitudeSlider" Minimum="0" Maximum="20000" Value="0" 
+                            IsSnapToTickEnabled="True" TickFrequency="10" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="White" CornerRadius="16" Padding="20">
+                <Grid ColumnDefinitions="*, Auto">
+                    <StackPanel>
+                        <TextBlock Text="ДАВЛЕНИЕ" FontSize="12" Foreground="#94A3B8" FontWeight="SemiBold" LetterSpacing="1"/>
+                        <TextBlock Name="PressureOutput" Text="101 325 Па" FontSize="22" FontWeight="SemiBold" Foreground="#334155" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Ellipse Width="36" Height="36" Grid.Column="1" Opacity="0.15">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                <GradientStop Offset="0" Color="#38BDF8"/>
+                                <GradientStop Offset="1" Color="#0284C7"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
+            </Border>
+
+            <Border Background="White" CornerRadius="16" Padding="20">
+                <Grid ColumnDefinitions="*, Auto">
+                    <StackPanel>
+                        <TextBlock Text="ПЛОТНОСТЬ" FontSize="12" Foreground="#94A3B8" FontWeight="SemiBold" LetterSpacing="1"/>
+                        <TextBlock Name="DensityOutput" Text="1.2250 кг/м³" FontSize="22" FontWeight="SemiBold" Foreground="#334155" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Ellipse Width="36" Height="36" Grid.Column="1" Opacity="0.15">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                <GradientStop Offset="0" Color="#34D399"/>
+                                <GradientStop Offset="1" Color="#059669"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
+            </Border>
+
+            <Border Name="TempCard" CornerRadius="16" Padding="20">
+                <Grid ColumnDefinitions="*, Auto">
+                    <StackPanel>
+                        <TextBlock Text="ТЕМПЕРАТУРА" FontSize="12" Foreground="#94A3B8" FontWeight="SemiBold" LetterSpacing="1"/>
+                        <TextBlock Name="TempOutput" Text="15.00 °C" FontSize="22" FontWeight="SemiBold" Foreground="#334155" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Ellipse Name="TempIcon" Width="36" Height="36" Grid.Column="1" Opacity="0.35" />
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <Border Grid.Column="1" Background="White" CornerRadius="20" Padding="0" ClipToBounds="True">
+            <Grid RowDefinitions="Auto, *">
+                <TextBlock Grid.Row="0" Text="Градиент падения давления" FontSize="16" FontWeight="Medium" Foreground="#64748B" Margin="25,25,0,0"/>
+                
+                <Canvas Grid.Row="1" Name="GraphCanvas" Margin="0,20,0,0">
+                    <Polygon Name="PressureArea">
+                        <Polygon.Fill>
+                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                <GradientStop Offset="0" Color="#253B82F6"/>
+                                <GradientStop Offset="1" Color="#003B82F6"/>
+                            </LinearGradientBrush>
+                        </Polygon.Fill>
+                    </Polygon>
+                    
+                    <Polyline Name="PressureCurve" Stroke="#93C5FD" StrokeThickness="3" StrokeJoin="Round"/>
+                    
+                    <Border Name="CurrentPointMarker" Width="12" Height="12" 
+                            Background="White" BorderBrush="#3B82F6" BorderThickness="3" 
+                            CornerRadius="6" Margin="-6,-6,0,0"/>
+                    
+                    <Border Name="MarkerLabel" CornerRadius="20" Padding="12,6" Margin="15,-40,0,0">
+                        <Border.Background>
+                            <SolidColorBrush Color="#0F172A" Opacity="0.85"/>
+                        </Border.Background>
+                        <TextBlock Name="MarkerText" Foreground="White" FontSize="12" FontWeight="Medium"/>
+                    </Border>
+                </Canvas>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
